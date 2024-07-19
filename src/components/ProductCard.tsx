@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 interface productCardProps {
   name: string;
@@ -15,14 +16,15 @@ const ProductCard: React.FC<productCardProps> = ({
   src,
   id,
 }) => {
+    const navigate = useNavigate();
   return (
-    <div>
+    <div onClick={() => navigate("/products/" + id)}>
       <div key={id} className="group relative">
         <div className="aspect-h-1 aspect-w-1 w-64 overflow-hidden rounded-md bg-white relative lg:aspect-none group-hover:opacity-75 lg:h-64">
           <img
             alt="asdfa"
             src={src}
-            className="h-24 w-24 object-cover lg:h-64 lg:w-64"
+            className="h-24 w-24 object-cover object-center lg:h-64 lg:w-64 sm:h-28 sm:w-28"
           />
         </div>
         <div className="mt-4 flex-col justify-between">

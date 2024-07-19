@@ -6,6 +6,7 @@ import "./App.css";
 import Home from "./pages/Home";
 import Navbar from "./components/Navbar";
 import Products from "./pages/Products";
+import ProductOverview from "./pages/ProductOverview";
 
 function App() {
   const navItems = [
@@ -21,6 +22,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home/>}/>
           <Route path="/products" element={<Products/>}/>
+          <Route path="/products/:id" element={<ProductOverview/>}/>
           <Route path="/about" element={<Home/>}/>
         </Routes>
       </Router>
