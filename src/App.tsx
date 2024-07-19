@@ -1,43 +1,29 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from "react";
+import reactLogo from "./assets/react.svg";
+import viteLogo from "/vite.svg";
+import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import "./App.css";
+import Home from "./pages/Home";
+import Navbar from "./components/Navbar";
 
 function App() {
-  const [count, setCount] = useState(0)
-
+  const navItems = [
+    { name: "Home", link: "/" },
+    { name: "Products", link: "/products" },
+    { name: "About Us", link: "/about" },
+  ];
   return (
     <>
-      <nav aria-label="Global" className="flex items-center justify-between p-6 lg:px-8">
-          <div className="flex lg:flex-1">
-            <a href="#" className="-m-1.5 p-1.5">
-              <span className="sr-only">Your Company</span>
-              <img
-                alt=""
-                src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-                className="h-8 w-auto"
-              />
-            </a>
-          </div>
-          <div className="flex lg:hidden">
-            <button
-              type="button"
-              className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
-            >
-              <span className="sr-only">Open main menu</span>
-            </button>
-          </div>
-          <div className="hidden lg:flex lg:gap-x-12">
-            
-          </div>
-          <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-            <a href="#" className="text-sm font-semibold leading-6 text-gray-900">
-              Log in <span aria-hidden="true">&rarr;</span>
-            </a>
-          </div>
-        </nav>
+      <Router>
+        <Navbar navItems={navItems} />
+        <Routes>
+          <Route path="/" element={<Home/>}/>
+          <Route path="/products" element={<Home/>}/>
+          <Route path="/about" element={<Home/>}/>
+        </Routes>
+      </Router>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
