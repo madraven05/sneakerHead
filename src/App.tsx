@@ -5,6 +5,7 @@ import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import "./App.css";
 import Home from "./pages/Home";
 import Navbar from "./components/Navbar";
+import Products from "./pages/Products";
 
 function App() {
   const navItems = [
@@ -16,9 +17,10 @@ function App() {
     <>
       <Router>
         <Navbar navItems={navItems} />
+        <div className="border-t border-gray-400 my-2"></div>
         <Routes>
           <Route path="/" element={<Home/>}/>
-          <Route path="/products" element={<Home/>}/>
+          <Route path="/products" element={<Products/>}/>
           <Route path="/about" element={<Home/>}/>
         </Routes>
       </Router>

@@ -22,8 +22,8 @@ const Navbar: React.FC<navBarProps> = ({navItems}) => {
           <span className="sr-only">Your Company</span>
           <img
             alt=""
-            src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-            className="h-8 w-auto"
+            src="site-icon.png"
+            className="h-11 w-auto"
           />
         </a>
       </div>
@@ -39,7 +39,7 @@ const Navbar: React.FC<navBarProps> = ({navItems}) => {
       </div>
       <div className="hidden lg:flex lg:gap-x-12">
         {navItems.map((item) => (
-          <Link to={item.link}>{item.name}</Link>
+          <Link className="font-semibold" to={item.link}>{item.name}</Link>
         ))}
       </div>
       <div className="hidden lg:flex lg:flex-1 lg:justify-end">
