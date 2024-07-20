@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import { productsList } from "../ProductsList";
 import { Radio, RadioGroup } from "@headlessui/react";
@@ -7,10 +7,13 @@ import {
   PencilSquareIcon,
   StarIcon,
 } from "@heroicons/react/16/solid";
+import CustomisationDialogue from "../components/CustomisationDialogue";
 
 const ProductOverview = () => {
   const { id } = useParams();
+  const [open, setOpen] = useState<boolean>(false);
   const product = productsList[id - 1];
+  
   return (
     <div className="my-5 grid grid-cols-2 justify-end lg:grid-cols-2 sm:grid-cols-1">
       {/* Col 1 */}
@@ -55,7 +58,7 @@ const ProductOverview = () => {
             className="h-3/6 w-auto rounded-lg shadow-lg"
           />
           <div className="absolute inset-y-0 right-0 p-5">
-            <PencilSquareIcon className="w-10 h-10 text-gray-300 hover:cursor-pointer hover:text-gray-500" />
+            <PencilSquareIcon onClick={() => setOpen(true)} className="w-10 h-10 text-gray-300 hover:cursor-pointer hover:text-gray-500" />
           </div>
         </div>
 
@@ -80,6 +83,11 @@ const ProductOverview = () => {
           Buy now
         </button>
       </div>
+
+
+
+      {/* Customisation Dialogue */}
+      <CustomisationDialogue modelPath={product.model} open={open} close={() => setOpen(false)} />
     </div>
   );
 };
