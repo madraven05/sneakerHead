@@ -1,7 +1,6 @@
 import { Button, Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
 import { OrbitControls } from "@react-three/drei";
-import React, { Suspense } from "react";
-import Model from "./Model";
+import React, { ReactNode, Suspense } from "react";
 import Lights from "./Lights";
 import { Canvas } from "@react-three/fiber";
 import {
@@ -9,17 +8,19 @@ import {
   HandRaisedIcon,
 } from "@heroicons/react/16/solid";
 import { ArrowPathIcon } from "@heroicons/react/24/outline";
+import { Model } from "./shoes/NikeAirJordan";
+import { AdidasOzelia } from "./shoes/AdidasOzelia";
 
 interface customisationDialogueProps {
   open: boolean;
   close: () => void;
-  modelPath: string;
+  model: ReactNode;
 }
 
 const CustomisationDialogue: React.FC<customisationDialogueProps> = ({
   open,
   close,
-  modelPath,
+  model,
 }) => {
   return (
     <Dialog
@@ -63,7 +64,7 @@ const CustomisationDialogue: React.FC<customisationDialogueProps> = ({
               <Canvas shadows camera={{ position: [0, 0, 15], fov: 20 }}>
                 <Lights />
                 <Suspense fallback={null}>
-                  <Model path={modelPath} scale={[1, 1, 1]} />
+                  {model}
                 </Suspense>
                 <OrbitControls />
               </Canvas>

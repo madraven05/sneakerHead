@@ -87,7 +87,7 @@ const ProductOverview = () => {
 
 
       {/* Customisation Dialogue */}
-      <CustomisationDialogue modelPath={product.model} open={open} close={() => setOpen(false)} />
+      <CustomisationDialogue model={product.model} open={open} close={() => setOpen(false)} />
     </div>
   );
 };
