@@ -1,3 +1,10 @@
+import { AdidasOzelia } from "./components/shoes/AdidasOzelia";
+import { ConverseHT } from "./components/shoes/ConverseHT";
+import { NewBalance997 } from "./components/shoes/NewBalance997";
+import { NikeAirJordan } from "./components/shoes/NikeAirJordan";
+import { NikeAirJordanBWHT } from "./components/shoes/NikeAirJordanBWHT";
+import { NikeTC7900 } from "./components/shoes/NikeTC7900";
+
 export const productsList = [
   {
     id: 1,
@@ -8,7 +15,7 @@ export const productsList = [
     description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ut enim et tortor bibendum ultrices ut a nunc. Aenean tincidunt elit eu neque varius, sollicitudin aliquet tellus cursus.",
     price: 13995,
-    model: "/nike-air-jordan/scene.gltf",
+    model: <NikeAirJordan/>,
   },
   {
     id: 2,
@@ -19,7 +26,7 @@ export const productsList = [
     description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ut enim et tortor bibendum ultrices ut a nunc. Aenean tincidunt elit eu neque varius, sollicitudin aliquet tellus cursus.",
     price: 5499.5,
-    model: "/adidas-ozelia/scene.gltf",
+    model: <AdidasOzelia/>,
   },
   {
     id: 3,
@@ -30,7 +37,7 @@ export const productsList = [
     description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ut enim et tortor bibendum ultrices ut a nunc. Aenean tincidunt elit eu neque varius, sollicitudin aliquet tellus cursus.",
     price: 10995,
-    model: "/nike-tc-7900/scene.gltf",
+    model: <NikeTC7900/>,
   },
   {
     id: 4,
@@ -41,7 +48,7 @@ export const productsList = [
     description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ut enim et tortor bibendum ultrices ut a nunc. Aenean tincidunt elit eu neque varius, sollicitudin aliquet tellus cursus.",
     price: 5999,
-    model: "",
+    model: <ConverseHT/>,
   },
   {
     id: 5,
@@ -52,21 +59,10 @@ export const productsList = [
     description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ut enim et tortor bibendum ultrices ut a nunc. Aenean tincidunt elit eu neque varius, sollicitudin aliquet tellus cursus.",
     price: 34000,
-    model: "/nike-air-jordan-bw/scene.gltf",
+    model: <NikeAirJordanBWHT/>,
   },
   {
     id: 6,
-    name: "Nike React Presto",
-    src: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQu-kNeJ48IKsRq-CepykCIZU8NLZn9HzOyog&s",
-    color: "Purple Octupus",
-    sizeList: ["XXS", "XS", "S", "M", "L", "XL", "2XL", "3XL"],
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ut enim et tortor bibendum ultrices ut a nunc. Aenean tincidunt elit eu neque varius, sollicitudin aliquet tellus cursus.",
-    price: 17899,
-    model: "",
-  },
-  {
-    id: 7,
     name: "New Balance 997",
     src: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQEbmJrNF1S_oxClqTSq4gTSAW2ZE68SxQjoA&s",
     color: "Explore by sea",
@@ -74,6 +70,6 @@ export const productsList = [
     description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ut enim et tortor bibendum ultrices ut a nunc. Aenean tincidunt elit eu neque varius, sollicitudin aliquet tellus cursus.",
     price: 21909,
-    model: "",
+    model: <NewBalance997/>,
   },
 ];
