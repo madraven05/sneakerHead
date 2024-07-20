@@ -5,7 +5,7 @@ const Model: React.FC<{ path: string; scale?: number[] }> = ({
   path,
   scale,
 }) => {
-  const { scene } = useGLTF(path, true);
+  const { scene } = useGLTF(path);
   scene.traverse((object) => {
     object.castShadow = true;
   });
