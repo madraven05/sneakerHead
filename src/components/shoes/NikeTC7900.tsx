@@ -89,8 +89,10 @@ export function NikeTC7900(props: JSX.IntrinsicElements["group"]) {
   };
 
   const PointerOut = (e: ThreeEvent<PointerEvent>) => {
-    setHoveredMeshName(null);
-    setHoveredMeshColor(null);
+    if (e.intersections.length === 0) {
+      setHoveredMeshName(null);
+      setHoveredMeshColor(null);
+    }
   };
 
   return (
