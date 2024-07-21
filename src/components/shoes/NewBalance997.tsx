@@ -7,41 +7,66 @@ Source: https://sketchfab.com/3d-models/new-balance-997-05e79a2dffbc4356bba7e075
 Title: New Balance 997
 */
 
-import * as THREE from 'three'
-import React from 'react'
-import { useGLTF } from '@react-three/drei'
-import { GLTF } from 'three-stdlib'
+import * as THREE from "three";
+import React, { useState } from "react";
+import { useGLTF } from "@react-three/drei";
+import { GLTF } from "three-stdlib";
 
 type GLTFResult = GLTF & {
   nodes: {
-    Shoe_set_02_Sole_0: THREE.Mesh
-    Shoe_set_02_Outer_0: THREE.Mesh
-    Shoe_set_02_Laces_0: THREE.Mesh
-    Shoe_set_02_Inner_0: THREE.Mesh
-  }
+    Shoe_set_02_Sole_0: THREE.Mesh;
+    Shoe_set_02_Outer_0: THREE.Mesh;
+    Shoe_set_02_Laces_0: THREE.Mesh;
+    Shoe_set_02_Inner_0: THREE.Mesh;
+  };
   materials: {
-    Sole: THREE.MeshStandardMaterial
-    Outer: THREE.MeshStandardMaterial
-    Laces: THREE.MeshStandardMaterial
-    Inner: THREE.MeshStandardMaterial
-  }
+    Sole: THREE.MeshStandardMaterial;
+    Outer: THREE.MeshStandardMaterial;
+    Laces: THREE.MeshStandardMaterial;
+    Inner: THREE.MeshStandardMaterial;
+  };
   // animations: GLTFAction[]
-}
+};
 
-export function NewBalance997(props: JSX.IntrinsicElements['group']) {
-  const { nodes, materials } = useGLTF('/nw-997/scene.gltf') as GLTFResult
+export function NewBalance997(props: JSX.IntrinsicElements["group"]) {
+  const { nodes, materials } = useGLTF("/nw-997/scene.gltf") as GLTFResult;
+  const [materialState, setMaterialsState] = useState({
+    materials: {
+      Sole: "#db2626f",
+      Outer: "#fafff",
+      Laces: "#bfaff",
+      Inner: "#fffff",
+    },
+  });
+
   return (
     <group {...props} dispose={null}>
       <group rotation={[-Math.PI / 2, 0, 0]}>
-        <group scale={[0.2,0.2,0.2]}>
-          <mesh geometry={nodes.Shoe_set_02_Sole_0.geometry} material={materials.Sole} />
-          <mesh geometry={nodes.Shoe_set_02_Outer_0.geometry} material={materials.Outer} />
-          <mesh geometry={nodes.Shoe_set_02_Laces_0.geometry} material={materials.Laces} />
-          <mesh geometry={nodes.Shoe_set_02_Inner_0.geometry} material={materials.Inner} />
+        <group scale={[0.2, 0.2, 0.2]}>
+          <mesh
+            material-color={materialState.materials.Sole}
+            geometry={nodes.Shoe_set_02_Sole_0.geometry}
+            material={materials.Sole}
+          />
+          <mesh
+            material-color={materialState.materials.Outer}
+            geometry={nodes.Shoe_set_02_Outer_0.geometry}
+            material={materials.Outer}
+          />
+          <mesh
+            material-color={materialState.materials.Laces}
+            geometry={nodes.Shoe_set_02_Laces_0.geometry}
+            material={materials.Laces}
+          />
+          <mesh
+            material-color={materialState.materials.Inner}
+            geometry={nodes.Shoe_set_02_Inner_0.geometry}
+            material={materials.Inner}
+          />
         </group>
       </group>
     </group>
-  )
+  );
 }
 
-useGLTF.preload('/scene.gltf')
+useGLTF.preload("/scene.gltf");
