@@ -84,15 +84,15 @@ export function NikeTC7900(props: JSX.IntrinsicElements["group"]) {
       const material = (e.object as THREE.Mesh)
         .material as THREE.MeshStandardMaterial;
       setHoveredMeshName(e.object.name);
-      setHoveredMeshColor(material.color.getHexString());
+      setHoveredMeshColor("#" + material.color.getHexString());
     }
   };
 
   const PointerOut = (e: ThreeEvent<PointerEvent>) => {
-    if (e.intersections.length === 0) {
-      setHoveredMeshName(null);
-      setHoveredMeshColor(null);
-    }
+    // if (e.intersections.length === 0) {
+    //   setHoveredMeshName(null);
+    //   setHoveredMeshColor(null);
+    // }
   };
 
   return (

@@ -1,6 +1,12 @@
 import { Button, Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
 import { OrbitControls } from "@react-three/drei";
-import React, { ReactNode, Suspense, useContext } from "react";
+import React, {
+  MouseEvent,
+  ReactNode,
+  Suspense,
+  useContext,
+  useState,
+} from "react";
 import Lights from "./Lights";
 import { Canvas } from "@react-three/fiber";
 import {
@@ -9,6 +15,8 @@ import {
 } from "@heroicons/react/16/solid";
 import { ArrowPathIcon, ViewColumnsIcon } from "@heroicons/react/24/outline";
 import { CanvasContext } from "./3DCanvasProvider";
+import { SketchPicker } from "react-color";
+import { HexColorPicker } from "react-colorful";
 
 interface customisationDialogueProps {
   open: boolean;
@@ -21,9 +29,9 @@ const CustomisationDialogue: React.FC<customisationDialogueProps> = ({
   close,
   model,
 }) => {
-
   const canvasContext = useContext(CanvasContext);
-  const {hoveredMeshName, hoveredMeshColor} = canvasContext!;
+  const { hoveredMeshName, hoveredMeshColor, setHoveredMeshColor } = canvasContext!;
+  const [showColorPicker, setShowColorPicker] = useState(false);
 
   return (
     <Dialog
@@ -48,7 +56,7 @@ const CustomisationDialogue: React.FC<customisationDialogueProps> = ({
             {/* threejs canvas */}
             <div className="flex outline outline-white outline-2 h-4/5 rounded-xl m-5">
               {/* Legend */}
-              <div className="absolute inset-y-20 p-5 flex gap-6">
+              <div className="absolute inset-y-20 h-10 p-5 flex gap-6">
                 <div className="flex gap-1">
                   <HandRaisedIcon className="h-5 w-5 text-white" />
                   <p className="text-white text-sm">R Mouse Button</p>
@@ -61,20 +69,33 @@ const CustomisationDialogue: React.FC<customisationDialogueProps> = ({
                   <ArrowsPointingOutIcon className="h-5 w-5 text-white" />
                   <p className="text-white text-sm">Scroll</p>
                 </div>
+                {hoveredMeshName ? (
+                  <div className="flex gap-2">
+                    <ViewColumnsIcon className="h-5 w-5 text-white" />
+                    <p className="text-white text-sm">{hoveredMeshName}</p>
+                    <button
+                      className="rounded w-5 h-4 shadow-sm"
+                      style={{ backgroundColor: hoveredMeshColor! }}
+                      onClick={() => {
+                        setShowColorPicker(!showColorPicker);
+                      }}
+                    />
 
-                {hoveredMeshName ? <div className="flex gap-1">
-                  <ViewColumnsIcon className="h-5 w-5 text-white" />
-                  <p className="text-white text-sm">{hoveredMeshName}</p>
-                  <p className="text-white text-sm font-mono">#{hoveredMeshColor}</p>
-                </div> : null}
+                    {showColorPicker ? (
+                      <HexColorPicker color={hoveredMeshColor!} onChange={(e) => setHoveredMeshColor(e)} />
+                    ) : null}
+                  </div>
+                ) : null}
               </div>
 
               {/* Main canvas */}
-              <Canvas shadows camera={{ position: [0, 0, 15], fov: 20 }}>
-                <Lights />
-                <Suspense fallback={null}>{model}</Suspense>
-                <OrbitControls />
-              </Canvas>
+              <div className="w-full mt-12">
+                <Canvas shadows camera={{ position: [0, 0, 15], fov: 20 }}>
+                  <Lights />
+                  <Suspense fallback={null}>{model}</Suspense>
+                  <OrbitControls />
+                </Canvas>
+              </div>
             </div>
 
             <div className="m-5">
@@ -82,7 +103,7 @@ const CustomisationDialogue: React.FC<customisationDialogueProps> = ({
                 className="inline-flex items-center gap-2 rounded-md bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[focus]:outline-1 data-[focus]:outline-white data-[open]:bg-gray-700"
                 onClick={close}
               >
-                Got it, thanks!
+                Done
               </Button>
             </div>
           </DialogPanel>

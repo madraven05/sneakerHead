@@ -8,6 +8,7 @@ import {
   StarIcon,
 } from "@heroicons/react/16/solid";
 import CustomisationDialogue from "../components/CustomisationDialogue";
+import { SketchPicker } from "react-color";
 
 const ProductOverview = () => {
   const { id } = useParams();
