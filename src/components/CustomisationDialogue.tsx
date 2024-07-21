@@ -1,15 +1,14 @@
 import { Button, Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
 import { OrbitControls } from "@react-three/drei";
-import React, { ReactNode, Suspense } from "react";
+import React, { ReactNode, Suspense, useContext } from "react";
 import Lights from "./Lights";
 import { Canvas } from "@react-three/fiber";
 import {
   ArrowsPointingOutIcon,
   HandRaisedIcon,
 } from "@heroicons/react/16/solid";
-import { ArrowPathIcon } from "@heroicons/react/24/outline";
-import { Model } from "./shoes/NikeAirJordan";
-import { AdidasOzelia } from "./shoes/AdidasOzelia";
+import { ArrowPathIcon, ViewColumnsIcon } from "@heroicons/react/24/outline";
+import { CanvasContext } from "./3DCanvasProvider";
 
 interface customisationDialogueProps {
   open: boolean;
@@ -22,6 +21,10 @@ const CustomisationDialogue: React.FC<customisationDialogueProps> = ({
   close,
   model,
 }) => {
+
+  const canvasContext = useContext(CanvasContext);
+  const {hoveredMeshName, hoveredMeshColor} = canvasContext!;
+
   return (
     <Dialog
       open={open}
@@ -44,7 +47,7 @@ const CustomisationDialogue: React.FC<customisationDialogueProps> = ({
 
             {/* threejs canvas */}
             <div className="flex outline outline-white outline-2 h-4/5 rounded-xl m-5">
-            {/* Legend */}
+              {/* Legend */}
               <div className="absolute inset-y-20 p-5 flex gap-6">
                 <div className="flex gap-1">
                   <HandRaisedIcon className="h-5 w-5 text-white" />
@@ -58,14 +61,18 @@ const CustomisationDialogue: React.FC<customisationDialogueProps> = ({
                   <ArrowsPointingOutIcon className="h-5 w-5 text-white" />
                   <p className="text-white text-sm">Scroll</p>
                 </div>
+
+                {hoveredMeshName ? <div className="flex gap-1">
+                  <ViewColumnsIcon className="h-5 w-5 text-white" />
+                  <p className="text-white text-sm">{hoveredMeshName}</p>
+                  <p className="text-white text-sm font-mono">#{hoveredMeshColor}</p>
+                </div> : null}
               </div>
 
               {/* Main canvas */}
               <Canvas shadows camera={{ position: [0, 0, 15], fov: 20 }}>
                 <Lights />
-                <Suspense fallback={null}>
-                  {model}
-                </Suspense>
+                <Suspense fallback={null}>{model}</Suspense>
                 <OrbitControls />
               </Canvas>
             </div>

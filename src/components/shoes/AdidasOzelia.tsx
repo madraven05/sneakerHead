@@ -7,53 +7,77 @@ Source: https://sketchfab.com/3d-models/adidas-ozelia-bd99ae674f724ca690198f2276
 Title: Adidas Ozelia
 */
 
-import * as THREE from 'three'
-import React, { useState } from 'react'
-import { useGLTF } from '@react-three/drei'
-import { GLTF } from 'three-stdlib'
+import * as THREE from "three";
+import React, { useState } from "react";
+import { useGLTF } from "@react-three/drei";
+import { GLTF } from "three-stdlib";
 
 type GLTFResult = GLTF & {
   nodes: {
-    Baked_Baked_0: THREE.Mesh
-    Baked_Baked_0_1: THREE.Mesh
-    Baked_Baked_0_2: THREE.Mesh
-    Baked_Baked_0_3: THREE.Mesh
-    Baked_Baked_0_4: THREE.Mesh
-  }
+    Baked_Baked_0: THREE.Mesh;
+    Baked_Baked_0_1: THREE.Mesh;
+    Baked_Baked_0_2: THREE.Mesh;
+    Baked_Baked_0_3: THREE.Mesh;
+    Baked_Baked_0_4: THREE.Mesh;
+  };
   materials: {
-    Baked: THREE.MeshStandardMaterial
-  }
+    Baked: THREE.MeshStandardMaterial;
+  };
   // animations: GLTFAction[]
-}
+};
 
-export function AdidasOzelia(props: JSX.IntrinsicElements['group']) {
-  const { nodes, materials } = useGLTF('/adidas-ozelia/scene.gltf') as GLTFResult
-  
-  const [materialState, setMaterialState] = useState(
-    {
-      materials: {
-        baked_0: "#fff000",
-        baked_01: "#fff000",
-        baked_02: "#fff000",
-        baked_03: "#fff000",
-        baked_04: "#fff000", 
-      }
-    }
-  )
+export function AdidasOzelia(props: JSX.IntrinsicElements["group"]) {
+  const { nodes, materials } = useGLTF(
+    "/adidas-ozelia/scene.gltf"
+  ) as GLTFResult;
+
+  const [materialState, setMaterialState] = useState({
+    materials: {
+      baked_0: "#110000",
+      baked_01: "#aaf000",
+      baked_02: "#7319d2",
+      baked_03: "#fff000",
+      baked_04: "#aaf000",
+    },
+  });
 
   return (
     <group {...props} dispose={null}>
       <group scale={0.01}>
-        <group position={[-0.903, -12.305, -1.715]} rotation={[-Math.PI / 2, 0, 0]} scale={50}>
-          <mesh material-color = {materialState.materials.baked_0} geometry={nodes.Baked_Baked_0.geometry} material={materials.Baked} />
-          <mesh material-color = {materialState.materials.baked_01} geometry={nodes.Baked_Baked_0_1.geometry} material={materials.Baked} />
-          <mesh material-color = {materialState.materials.baked_02} geometry={nodes.Baked_Baked_0_2.geometry} material={materials.Baked} />
-          <mesh material-color = {materialState.materials.baked_03} geometry={nodes.Baked_Baked_0_3.geometry} material={materials.Baked} />
-          <mesh material-color = {materialState.materials.baked_04} geometry={nodes.Baked_Baked_0_4.geometry} material={materials.Baked} />
+        <group
+          position={[-0.903, -12.305, -1.715]}
+          rotation={[-Math.PI / 2, 0, 0]}
+          scale={50}
+        >
+          <mesh
+            material-color={materialState.materials.baked_0}
+            geometry={nodes.Baked_Baked_0.geometry}
+            material={materials.Baked}
+          />
+          <mesh
+            material-color={materialState.materials.baked_01}
+            geometry={nodes.Baked_Baked_0_1.geometry}
+            material={materials.Baked}
+          />
+          <mesh
+            material-color={materialState.materials.baked_02}
+            geometry={nodes.Baked_Baked_0_2.geometry}
+            material={materials.Baked}
+          />
+          <mesh
+            material-color={materialState.materials.baked_03}
+            geometry={nodes.Baked_Baked_0_3.geometry}
+            material={materials.Baked}
+          />
+          <mesh
+            material-color={materialState.materials.baked_04}
+            geometry={nodes.Baked_Baked_0_4.geometry}
+            material={materials.Baked}
+          />
         </group>
       </group>
     </group>
-  )
+  );
 }
 
-useGLTF.preload('/scene.gltf')
+// useGLTF.preload("/scene.gltf");
