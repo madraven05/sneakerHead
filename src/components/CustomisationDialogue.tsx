@@ -17,11 +17,18 @@ import { ArrowPathIcon, ViewColumnsIcon } from "@heroicons/react/24/outline";
 import { CanvasContext } from "./3DCanvasProvider";
 import { SketchPicker } from "react-color";
 import { HexColorPicker } from "react-colorful";
+import { initialSneakerStates, SneakerStates } from "./ShoeState";
+import { NikeAirJordan } from "./shoes/NikeAirJordan";
+import { NikeTC7900 } from "./shoes/NikeTC7900";
 
 interface customisationDialogueProps {
   open: boolean;
   close: () => void;
-  model: ReactNode;
+  model: string;
+}
+
+interface SneakerNodeDict {
+  [key: string]: ReactNode
 }
 
 const CustomisationDialogue: React.FC<customisationDialogueProps> = ({
@@ -30,8 +37,29 @@ const CustomisationDialogue: React.FC<customisationDialogueProps> = ({
   model,
 }) => {
   const canvasContext = useContext(CanvasContext);
-  const { hoveredMeshName, hoveredMeshColor, setHoveredMeshColor } = canvasContext!;
+
+  const [sneakerStates, setSneakerStates] = useState<SneakerStates>(initialSneakerStates)
+
+  const { hoveredMeshName, hoveredMeshColor, hoveredMeshString, setHoveredMeshColor } = canvasContext!;
   const [showColorPicker, setShowColorPicker] = useState(false);
+
+  const sneakerNodeDict: SneakerNodeDict = {
+    nikeTC7900: <NikeTC7900 sneakerColorState={sneakerStates.nikeTC7900}/>
+  }
+
+  const updateMeshColor = (color: string, sneakerName: string, meshName: string) => {
+    setHoveredMeshColor(color);
+    
+    setSneakerStates((prevSneakerState) => ({
+      ...prevSneakerState,
+      [sneakerName]: {
+        ...prevSneakerState[sneakerName],
+        [meshName]: color
+      }
+    }))
+
+
+  }
 
   return (
     <Dialog
@@ -82,7 +110,7 @@ const CustomisationDialogue: React.FC<customisationDialogueProps> = ({
                     />
 
                     {showColorPicker ? (
-                      <HexColorPicker color={hoveredMeshColor!} onChange={(e) => setHoveredMeshColor(e)} />
+                      <HexColorPicker style={{height: "15vh"}} color={hoveredMeshColor!} onChange={(color) => updateMeshColor(color, model, hoveredMeshString!)} />
                     ) : null}
                   </div>
                 ) : null}
@@ -92,7 +120,7 @@ const CustomisationDialogue: React.FC<customisationDialogueProps> = ({
               <div className="w-full mt-12">
                 <Canvas shadows camera={{ position: [0, 0, 15], fov: 20 }}>
                   <Lights />
-                  <Suspense fallback={null}>{model}</Suspense>
+                  <Suspense fallback={null}>{sneakerNodeDict[model]}</Suspense>
                   <OrbitControls />
                 </Canvas>
               </div>

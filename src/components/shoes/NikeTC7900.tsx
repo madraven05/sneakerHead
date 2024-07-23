@@ -9,6 +9,7 @@ import { useGLTF } from "@react-three/drei";
 import { GLTF } from "three-stdlib";
 import { CanvasContext } from "../3DCanvasProvider";
 import { ThreeEvent } from "@react-three/fiber";
+import { SneakerColorStates } from "../ShoeState";
 
 type GLTFResult = GLTF & {
   nodes: {
@@ -50,49 +51,37 @@ type GLTFResult = GLTF & {
   // animations: GLTFAction[]
 };
 
-export function NikeTC7900(props: JSX.IntrinsicElements["group"]) {
+interface SneakerNodeProps {
+  props?: JSX.IntrinsicElements["group"];
+  sneakerColorState: SneakerColorStates;
+}
+
+export const NikeTC7900: React.FC<SneakerNodeProps> = ({
+  props,
+  sneakerColorState,
+}) => {
   const { nodes, materials } = useGLTF(
     "/nike-tc-7900/scene.gltf"
   ) as GLTFResult;
 
-  const [materialState, setMaterialState] = useState({
-    materials: {
-      inside_sock: "#ffffff",
-      laces: "#ffffff",
-      main_body: "#ffffff",
-      nike_lace_tag: "#ffffff",
-      nike_back_tag: "#ffffff",
-      nike_logo: "#ffffff",
-      nike_backside_logo: "#ffffff",
-      frontside: "#ffffff",
-      laces_cap: "#ffffff",
-      frontside_sole: "#ffffff",
-      under_sole: "#ffffff",
-      side_sole: "#ffffff",
-      front_sole: "#ffffff",
-      sula_insida: "#ffffff",
-    },
-  });
-
   const canvasContext = useContext(CanvasContext);
-  const { setHoveredMeshName, setHoveredMeshColor } = canvasContext!;
+  const { setHoveredMeshName, setHoveredMeshColor, setHoveredMeshString } = canvasContext!;
+  const [isUpdateState, setIsUpdateState] = useState(true);
 
   const PointerOver = (e: ThreeEvent<PointerEvent>) => {
     e.stopPropagation();
-
-    if (e.object instanceof THREE.Mesh && e.buttons === 0) {
+    if (e.object instanceof THREE.Mesh && e.buttons === 0 && isUpdateState) {
       const material = (e.object as THREE.Mesh)
         .material as THREE.MeshStandardMaterial;
       setHoveredMeshName(e.object.name);
+      setHoveredMeshString(e.object.material.name);
       setHoveredMeshColor("#" + material.color.getHexString());
+      
     }
   };
 
-  const PointerOut = (e: ThreeEvent<PointerEvent>) => {
-    // if (e.intersections.length === 0) {
-    //   setHoveredMeshName(null);
-    //   setHoveredMeshColor(null);
-    // }
+  const fixStates = (e: ThreeEvent<MouseEvent>) => {
+    setIsUpdateState(!isUpdateState);
   };
 
   return (
@@ -100,7 +89,7 @@ export function NikeTC7900(props: JSX.IntrinsicElements["group"]) {
       {...props}
       dispose={null}
       onPointerOver={PointerOver}
-      onPointerOut={PointerOut}
+      onClick={fixStates}
     >
       <mesh
         name="Lace Pin"
@@ -112,27 +101,27 @@ export function NikeTC7900(props: JSX.IntrinsicElements["group"]) {
       />
       <mesh
         name="Inside Sock"
-        material-color={materialState.materials.inside_sock}
+        material-color={sneakerColorState.insida_sock}
         geometry={nodes.insida_sock.geometry}
         material={materials["Material.006"]}
         scale={[0.11, 0.108, 0.108]}
       />
       <mesh
         name="Laces"
-        material-color={materialState.materials.laces}
+        material-color={sneakerColorState.snöre}
         geometry={nodes.snöre.geometry}
         material={materials["Material.004"]}
       />
       <mesh
         name="Nike Back Tag"
-        material-color={materialState.materials.nike_back_tag}
+        material-color={sneakerColorState.snöre_baksida}
         geometry={nodes.snöre_baksida.geometry}
         material={materials["Material.001"]}
         scale={0.108}
       />
       <mesh
         name="Nike Lace Tag"
-        material-color={materialState.materials.nike_lace_tag}
+        material-color={sneakerColorState.snöre_framsida}
         geometry={nodes.snöre_framsida.geometry}
         material={materials.Material}
         scale={0.108}
@@ -148,37 +137,37 @@ export function NikeTC7900(props: JSX.IntrinsicElements["group"]) {
       <group scale={0.108}>
         <mesh
           name="Body"
-          material-color={materialState.materials.main_body}
+          material-color={sneakerColorState.material_grund}
           geometry={nodes.Cube002.geometry}
           material={materials.material_grund}
         />
         <mesh
           name="Nike Logo"
-          material-color={materialState.materials.nike_logo}
+          material-color={sneakerColorState.nike_logga}
           geometry={nodes.Cube002_1.geometry}
           material={materials.nike_logga}
         />
         <mesh
           name="Nike Backside Logo"
-          material-color={materialState.materials.nike_backside_logo}
+          material-color={sneakerColorState.baksida_logga}
           geometry={nodes.Cube002_2.geometry}
           material={materials.baksida_logga}
         />
         <mesh
           name="Nike Frontside"
-          material-color={materialState.materials.frontside}
+          material-color={sneakerColorState.framsida}
           geometry={nodes.Cube002_3.geometry}
           material={materials.framsida}
         />
         <mesh
           name="Laces Cap"
-          material-color={materialState.materials.laces_cap}
+          material-color={sneakerColorState.överdel}
           geometry={nodes.Cube002_4.geometry}
           material={materials.överdel}
         />
         <mesh
           name="Frontside sole"
-          material-color={materialState.materials.frontside_sole}
+          material-color={sneakerColorState.framsida_övre}
           geometry={nodes.Cube002_5.geometry}
           material={materials.framsida_övre}
         />
@@ -186,32 +175,32 @@ export function NikeTC7900(props: JSX.IntrinsicElements["group"]) {
       <group scale={0.108}>
         <mesh
           name="Under sole"
-          material-color={materialState.materials.under_sole}
+          material-color={sneakerColorState.sko_sula_underdel}
           geometry={nodes.Cube003.geometry}
           material={materials.sko_sula_underdel}
         />
         <mesh
           name="Side sole"
-          material-color={materialState.materials.side_sole}
+          material-color={sneakerColorState.sko_sula_sida}
           geometry={nodes.Cube003_1.geometry}
           material={materials.sko_sula_sida}
         />
         <mesh
           name="Front sole"
-          material-color={materialState.materials.front_sole}
+          material-color={sneakerColorState.front_sole}
           geometry={nodes.Cube003_2.geometry}
           material={materials.sko_sula_framifrån}
         />
       </group>
       <mesh
         name="Sole inside"
-        material-color={materialState.materials.sula_insida}
+        material-color={sneakerColorState.sula_insida}
         geometry={nodes.sula_insida.geometry}
         material={materials.sula_insida}
         scale={[0.11, 0.108, 0.108]}
       />
     </group>
   );
-}
+};
 
 useGLTF.preload("/scene.gltf");
