@@ -15,7 +15,7 @@ export const productsList = [
     description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ut enim et tortor bibendum ultrices ut a nunc. Aenean tincidunt elit eu neque varius, sollicitudin aliquet tellus cursus.",
     price: 13995,
-    model: <NikeAirJordan/>,
+    model: "nikeAirJordan1LowG",
   },
   {
     id: 2,
@@ -26,7 +26,7 @@ export const productsList = [
     description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ut enim et tortor bibendum ultrices ut a nunc. Aenean tincidunt elit eu neque varius, sollicitudin aliquet tellus cursus.",
     price: 5499.5,
-    model: <AdidasOzelia/>,
+    model: "adidasOzelia"
   },
   {
     id: 3,
@@ -37,7 +37,7 @@ export const productsList = [
     description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ut enim et tortor bibendum ultrices ut a nunc. Aenean tincidunt elit eu neque varius, sollicitudin aliquet tellus cursus.",
     price: 10995,
-    model: <NikeTC7900/>,
+    model:  "nikeTC7900",
   },
   {
     id: 4,
@@ -48,7 +48,7 @@ export const productsList = [
     description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ut enim et tortor bibendum ultrices ut a nunc. Aenean tincidunt elit eu neque varius, sollicitudin aliquet tellus cursus.",
     price: 5999,
-    model: <ConverseHT/>,
+    model:  "converseBlackHT",
   },
   {
     id: 5,
@@ -59,7 +59,7 @@ export const productsList = [
     description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ut enim et tortor bibendum ultrices ut a nunc. Aenean tincidunt elit eu neque varius, sollicitudin aliquet tellus cursus.",
     price: 34000,
-    model: <NikeAirJordanBWHT/>,
+    model: "nikeAirJordan1RetroHigh",
   },
   {
     id: 6,
@@ -70,6 +70,6 @@ export const productsList = [
     description:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean ut enim et tortor bibendum ultrices ut a nunc. Aenean tincidunt elit eu neque varius, sollicitudin aliquet tellus cursus.",
     price: 21909,
-    model: <NewBalance997/>,
+    model: "nb997",
   },
 ];
