@@ -11,8 +11,9 @@ import ProductOverview from "./pages/ProductOverview";
 function App() {
   const navItems = [
     { name: "Home", link: "/" },
-    { name: "Products", link: "/products" },
+    { name: "Shop", link: "/products" },
     { name: "About Us", link: "/about" },
+    { name: "Subscribe", link: "/about" }
   ];
   return (
     <>

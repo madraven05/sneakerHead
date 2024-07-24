@@ -5,6 +5,14 @@
   /* text-align: center; */
 }
 
+body {
+  background-color: #8a8a8a;
+  background-image: linear-gradient(62deg, #afaeae 0%, #cacaca 100%);
+  min-height: 100vh;
+  @apply font-archivoBlack;
+  color: white;
+}
+
 .logo {
   height: 6em;
   padding: 1.5em;
