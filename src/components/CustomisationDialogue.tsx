@@ -1,10 +1,10 @@
 import { Button, Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
 import { OrbitControls } from "@react-three/drei";
 import React, {
-  MouseEvent,
   ReactNode,
   Suspense,
   useContext,
+  useRef,
   useState,
 } from "react";
 import Lights from "./Lights";
@@ -15,11 +15,11 @@ import {
 } from "@heroicons/react/16/solid";
 import { ArrowPathIcon, ViewColumnsIcon } from "@heroicons/react/24/outline";
 import { CanvasContext } from "./3DCanvasProvider";
-import { SketchPicker } from "react-color";
 import { HexColorPicker } from "react-colorful";
 import { initialSneakerStates, SneakerStates } from "./ShoeState";
-import { NikeAirJordan } from "./shoes/NikeAirJordan";
-import { NikeTC7900 } from "./shoes/NikeTC7900";
+import NikeTC7900, { MeshGroupRef } from "./shoes/NikeTC7900";
+import Dropdown, { DropdownItem } from "./Dropdown";
+import { EyeIcon } from "@heroicons/react/24/solid";
 
 interface customisationDialogueProps {
   open: boolean;
@@ -28,7 +28,7 @@ interface customisationDialogueProps {
 }
 
 interface SneakerNodeDict {
-  [key: string]: ReactNode
+  [key: string]: ReactNode;
 }
 
 const CustomisationDialogue: React.FC<customisationDialogueProps> = ({
@@ -36,30 +36,89 @@ const CustomisationDialogue: React.FC<customisationDialogueProps> = ({
   close,
   model,
 }) => {
+  // states, refs and context declerations
   const canvasContext = useContext(CanvasContext);
 
-  const [sneakerStates, setSneakerStates] = useState<SneakerStates>(initialSneakerStates)
-
-  const { hoveredMeshName, hoveredMeshColor, hoveredMeshString, setHoveredMeshColor } = canvasContext!;
+  const [sneakerStates, setSneakerStates] =
+    useState<SneakerStates>(initialSneakerStates);
+  const {
+    hoveredMeshName,
+    hoveredMeshColor,
+    hoveredMeshString,
+    setHoveredMeshColor,
+  } = canvasContext!;
   const [showColorPicker, setShowColorPicker] = useState(false);
 
-  const sneakerNodeDict: SneakerNodeDict = {
-    nikeTC7900: <NikeTC7900 sneakerColorState={sneakerStates.nikeTC7900}/>
-  }
+  const sneakerRef = useRef<MeshGroupRef>(null);
 
-  const updateMeshColor = (color: string, sneakerName: string, meshName: string) => {
+  // functions
+  const updateMeshColor = (
+    color: string,
+    sneakerName: string,
+    meshName: string
+  ) => {
     setHoveredMeshColor(color);
-    
+
     setSneakerStates((prevSneakerState) => ({
       ...prevSneakerState,
       [sneakerName]: {
         ...prevSneakerState[sneakerName],
-        [meshName]: color
-      }
-    }))
+        [meshName]: color,
+      },
+    }));
+  };
 
+  const changeProfile = (profile: "front" | "right" | "left") => {
+    console.log(profile);
+    switch (profile) {
+      case "front":
+        if (sneakerRef.current) {
+          sneakerRef.current.rotateGroup(0, 0, 0);
+        }
+        break;
+      case "right":
+        if (sneakerRef.current) {
+          sneakerRef.current.rotateGroup(0, Math.PI/2, 0);
+        }
+        break;
+      case "left":
+        if (sneakerRef.current) {
+          sneakerRef.current.rotateGroup(0, -Math.PI/2, 0);
+        }
+        break;
 
-  }
+      default:
+        sneakerRef.current!.rotateGroup(0, Math.PI/2, 0);
+        break;
+    }
+  };
+
+  // variables
+  const sneakerNodeDict: SneakerNodeDict = {
+    nikeTC7900: (
+      <NikeTC7900
+        sneakerColorState={sneakerStates.nikeTC7900}
+        ref={sneakerRef}
+      />
+    ),
+  };
+  const profilesDropdownItems: DropdownItem[] = [
+    {
+      title: "Front Profile",
+      setProfile: changeProfile,
+      profile: "front",
+    },
+    {
+      title: "Right Profile",
+      setProfile: changeProfile,
+      profile: "right"
+    },
+    {
+      title: "Left Profile",
+      setProfile: changeProfile,
+      profile: "left"
+    },
+  ];
 
   return (
     <Dialog
@@ -72,7 +131,7 @@ const CustomisationDialogue: React.FC<customisationDialogueProps> = ({
         <div className="h-full items-center justify-center p-14">
           <DialogPanel
             transition
-            className="h-full w-full shadow-lg rounded-xl bg-black/25 p-6 backdrop-blur-xl duration-300 ease-out data-[closed]:transform-[scale(95%)] data-[closed]:opacity-0"
+            className="w-full h-full shadow-lg rounded-xl bg-black/25 p-6 backdrop-blur-xl duration-300 ease-out data-[closed]:transform-[scale(95%)] data-[closed]:opacity-0"
           >
             <DialogTitle
               as="h3"
@@ -82,9 +141,9 @@ const CustomisationDialogue: React.FC<customisationDialogueProps> = ({
             </DialogTitle>
 
             {/* threejs canvas */}
-            <div className="flex outline outline-white outline-2 h-4/5 rounded-xl m-5">
+            <div className="flex-col items-center outline outline-white outline-2 gap-6 rounded-xl m-5">
               {/* Legend */}
-              <div className="absolute inset-y-20 h-10 p-5 flex gap-6">
+              <div className="items-center h-10 p-5 flex gap-6">
                 <div className="flex gap-1">
                   <HandRaisedIcon className="h-5 w-5 text-white" />
                   <p className="text-white text-sm">R Mouse Button</p>
@@ -110,23 +169,39 @@ const CustomisationDialogue: React.FC<customisationDialogueProps> = ({
                     />
 
                     {showColorPicker ? (
-                      <HexColorPicker style={{height: "15vh"}} color={hoveredMeshColor!} onChange={(color) => updateMeshColor(color, model, hoveredMeshString!)} />
+                      <HexColorPicker
+                        style={{ height: "15vh" }}
+                        color={hoveredMeshColor!}
+                        onChange={(color) =>
+                          updateMeshColor(color, model, hoveredMeshString!)
+                        }
+                      />
                     ) : null}
                   </div>
                 ) : null}
               </div>
 
               {/* Main canvas */}
-              <div className="w-full mt-12">
+              <div className="w-full h-96">
                 <Canvas shadows camera={{ position: [0, 0, 15], fov: 20 }}>
                   <Lights />
                   <Suspense fallback={null}>{sneakerNodeDict[model]}</Suspense>
                   <OrbitControls />
                 </Canvas>
               </div>
+
+              {/* Viewing tools */}
+              <div className="w-fit p-5 text-white text-sm">
+                <Dropdown
+                  anchor="top start"
+                  icon={<EyeIcon />}
+                  title={"Profiles"}
+                  menuItems={profilesDropdownItems}
+                />
+              </div>
             </div>
 
-            <div className="m-5">
+            <div className="">
               <Button
                 className="inline-flex items-center gap-2 rounded-md bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[focus]:outline-1 data-[focus]:outline-white data-[open]:bg-gray-700"
                 onClick={close}

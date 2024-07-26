@@ -1,62 +1,44 @@
-import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
-import { AdjustmentsHorizontalIcon, ChevronDownIcon } from "@heroicons/react/16/solid";
-import React, { ReactNode } from "react";
+import { Menu, MenuButton, MenuItem, MenuItemProps, MenuItems, MenuItemsProps } from "@headlessui/react";
+import React, { HTMLAttributes, ReactNode } from "react";
 
-interface dropdownProps {
-    icon: ReactNode,
-    title: string
+export type DropdownItem = {
+  title: string;
+  setProfile(profile: string): void;
+  profile: "front" | "right" | "left"
+};
+
+interface dropdownProps extends MenuItemsProps {
+  icon: ReactNode;
+  title: string;
+  menuItems?: DropdownItem[];
 }
 
-const Dropdown:React.FC<dropdownProps> = ({icon, title}) => {
+const Dropdown: React.FC<dropdownProps> = ({ icon, title, menuItems, anchor }) => {
   return (
-    <Menu as="div" className="relative inline-block text-left">
+    <Menu as="div" className={`relative inline-block text-left`}>
       <div>
-        <MenuButton className="inline-flex w-full justify-center gap-x-1.5 rounded-full bg-white px-4 py-2 text-sm text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
+        <MenuButton className="inline-flex w-full justify-center gap-x-1.5 rounded-full px-4 py-2 text-sm shadow-sm ring-1 ring-inset ring-gray-300">
           {title}
           {icon}
-          {/*  */}
         </MenuButton>
       </div>
 
       <MenuItems
         transition
-        className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
+        anchor={anchor}
+        className={`absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in`}
       >
         <div className="py-1">
-          <MenuItem>
-            <a
-              href="#"
-              className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:text-gray-900"
-            >
-              Account settings
-            </a>
-          </MenuItem>
-          <MenuItem>
-            <a
-              href="#"
-              className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:text-gray-900"
-            >
-              Support
-            </a>
-          </MenuItem>
-          <MenuItem>
-            <a
-              href="#"
-              className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:text-gray-900"
-            >
-              License
-            </a>
-          </MenuItem>
-          <form action="#" method="POST">
+          {menuItems?.map((item) => (
             <MenuItem>
               <button
-                type="submit"
-                className="block w-full px-4 py-2 text-left text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:text-gray-900"
+                onClick={() => item.setProfile(item.profile)}
+                className="block px-4 w-full py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:text-gray-900"
               >
-                Sign out
+                {item.title}
               </button>
             </MenuItem>
-          </form>
+          ))}
         </div>
       </MenuItems>
     </Menu>
