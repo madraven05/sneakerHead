@@ -1,10 +1,17 @@
-import { Menu, MenuButton, MenuItem, MenuItemProps, MenuItems, MenuItemsProps } from "@headlessui/react";
-import React, { HTMLAttributes, ReactNode } from "react";
+import {
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuItems,
+  MenuItemsProps,
+} from "@headlessui/react";
+import React, { ReactNode } from "react";
+import { ViewProfile } from "./hocs/SneakerCustomization";
 
 export type DropdownItem = {
   title: string;
-  setProfile(profile: string): void;
-  profile: "front" | "right" | "left"
+  setProfile(profile: ViewProfile): void;
+  profile: ViewProfile;
 };
 
 interface dropdownProps extends MenuItemsProps {
@@ -13,7 +20,12 @@ interface dropdownProps extends MenuItemsProps {
   menuItems?: DropdownItem[];
 }
 
-const Dropdown: React.FC<dropdownProps> = ({ icon, title, menuItems, anchor }) => {
+const Dropdown: React.FC<dropdownProps> = ({
+  icon,
+  title,
+  menuItems,
+  anchor,
+}) => {
   return (
     <Menu as="div" className={`relative inline-block text-left`}>
       <div>

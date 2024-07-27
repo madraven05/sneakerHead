@@ -17,9 +17,10 @@ import { ArrowPathIcon, ViewColumnsIcon } from "@heroicons/react/24/outline";
 import { CanvasContext } from "./3DCanvasProvider";
 import { HexColorPicker } from "react-colorful";
 import { initialSneakerStates, SneakerStates } from "./ShoeState";
-import NikeTC7900, { MeshGroupRef } from "./shoes/NikeTC7900";
+import NikeTC7900 from "./shoes/NikeTC7900";
 import Dropdown, { DropdownItem } from "./Dropdown";
 import { EyeIcon } from "@heroicons/react/24/solid";
+import { MeshGroupRef, ViewProfile } from "./hocs/SneakerCustomization";
 
 interface customisationDialogueProps {
   open: boolean;
@@ -68,28 +69,26 @@ const CustomisationDialogue: React.FC<customisationDialogueProps> = ({
     }));
   };
 
-  const changeProfile = (profile: "front" | "right" | "left") => {
+  const changeProfile = (profile: ViewProfile) => {
     console.log(profile);
-    switch (profile) {
-      case "front":
-        if (sneakerRef.current) {
-          sneakerRef.current.rotateGroup(0, 0, 0);
-        }
-        break;
-      case "right":
-        if (sneakerRef.current) {
-          sneakerRef.current.rotateGroup(0, Math.PI/2, 0);
-        }
-        break;
-      case "left":
-        if (sneakerRef.current) {
-          sneakerRef.current.rotateGroup(0, -Math.PI/2, 0);
-        }
-        break;
-
-      default:
-        sneakerRef.current!.rotateGroup(0, Math.PI/2, 0);
-        break;
+    if (sneakerRef.current) {
+      switch (profile) {
+        case "front":
+          sneakerRef.current.rotateGroup([0, 0, 0]);
+          break;
+        case "right":
+          sneakerRef.current.rotateGroup([0, Math.PI / 2, 0]);
+          break;
+        case "left":
+          sneakerRef.current.rotateGroup([0, -Math.PI / 2, 0]);
+          break;
+        case "back":
+          sneakerRef.current.rotateGroup([0, Math.PI, 0]);
+          break;
+        default:
+          sneakerRef.current.rotateGroup([0, 0, 0]);
+          break;
+      }
     }
   };
 
@@ -111,12 +110,17 @@ const CustomisationDialogue: React.FC<customisationDialogueProps> = ({
     {
       title: "Right Profile",
       setProfile: changeProfile,
-      profile: "right"
+      profile: "right",
     },
     {
       title: "Left Profile",
       setProfile: changeProfile,
-      profile: "left"
+      profile: "left",
+    },
+    {
+      title: "Back Profile",
+      setProfile: changeProfile,
+      profile: "back",
     },
   ];
 

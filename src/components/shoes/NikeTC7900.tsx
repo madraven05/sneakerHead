@@ -15,7 +15,7 @@ import {
   ThreeEvent,
 } from "@react-three/fiber";
 import { SneakerColorStates } from "../ShoeState";
-import withSneaker3Dcustomization from "../hocs/SneakerComponent";
+import withSneaker3Dcustomization, { ViewProfile } from "../hocs/SneakerCustomization";
 
 type GLTFResult = GLTF & {
   nodes: {
@@ -57,10 +57,6 @@ type GLTFResult = GLTF & {
   // animations: GLTFAction[]
 };
 
-export type MeshGroupRef = {
-  rotateGroup: (x: number, y: number, z: number) => void;
-};
-
 interface SneakerNodeProps {
   sneakerColorState: SneakerColorStates;
 }
@@ -70,31 +66,10 @@ const NikeTC7900: React.FC<SneakerNodeProps> = ({ sneakerColorState }) => {
     "/nike-tc-7900/scene.gltf"
   ) as GLTFResult;
 
-  const canvasContext = useContext(CanvasContext);
-  const { setHoveredMeshName, setHoveredMeshColor, setHoveredMeshString } =
-    canvasContext!;
-  const [isUpdateState, setIsUpdateState] = useState(true);
-
-  const PointerOver = (e: ThreeEvent<PointerEvent>) => {
-    e.stopPropagation();
-    if (e.object instanceof THREE.Mesh && e.buttons === 0 && isUpdateState) {
-      const material = (e.object as THREE.Mesh)
-        .material as THREE.MeshStandardMaterial;
-      setHoveredMeshName(e.object.name);
-      setHoveredMeshString(e.object.material.name);
-      setHoveredMeshColor("#" + material.color.getHexString());
-    }
-  };
-
-  const fixStates = (e: ThreeEvent<MouseEvent>) => {
-    setIsUpdateState(!isUpdateState);
-  };
-
   return (
     <group
       dispose={null}
-      onPointerOver={PointerOver}
-      onClick={fixStates}
+      scale={8}
     >
       <mesh
         name="Lace Pin"
