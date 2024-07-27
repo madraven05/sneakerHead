@@ -4,12 +4,18 @@ Command: npx gltfjsx@6.4.1 scene.gltf -t -o NikeTC7900.tsx
 */
 
 import * as THREE from "three";
-import React, { useContext, useState } from "react";
+import React, {
+  useContext,
+  useState,
+} from "react";
 import { useGLTF } from "@react-three/drei";
 import { GLTF } from "three-stdlib";
 import { CanvasContext } from "../3DCanvasProvider";
-import { ThreeEvent } from "@react-three/fiber";
+import {
+  ThreeEvent,
+} from "@react-three/fiber";
 import { SneakerColorStates } from "../ShoeState";
+import withSneaker3Dcustomization, { ViewProfile } from "../hocs/SneakerCustomization";
 
 type GLTFResult = GLTF & {
   nodes: {
@@ -52,44 +58,18 @@ type GLTFResult = GLTF & {
 };
 
 interface SneakerNodeProps {
-  props?: JSX.IntrinsicElements["group"];
   sneakerColorState: SneakerColorStates;
 }
 
-export const NikeTC7900: React.FC<SneakerNodeProps> = ({
-  props,
-  sneakerColorState,
-}) => {
+const NikeTC7900: React.FC<SneakerNodeProps> = ({ sneakerColorState }) => {
   const { nodes, materials } = useGLTF(
     "/nike-tc-7900/scene.gltf"
   ) as GLTFResult;
 
-  const canvasContext = useContext(CanvasContext);
-  const { setHoveredMeshName, setHoveredMeshColor, setHoveredMeshString } = canvasContext!;
-  const [isUpdateState, setIsUpdateState] = useState(true);
-
-  const PointerOver = (e: ThreeEvent<PointerEvent>) => {
-    e.stopPropagation();
-    if (e.object instanceof THREE.Mesh && e.buttons === 0 && isUpdateState) {
-      const material = (e.object as THREE.Mesh)
-        .material as THREE.MeshStandardMaterial;
-      setHoveredMeshName(e.object.name);
-      setHoveredMeshString(e.object.material.name);
-      setHoveredMeshColor("#" + material.color.getHexString());
-      
-    }
-  };
-
-  const fixStates = (e: ThreeEvent<MouseEvent>) => {
-    setIsUpdateState(!isUpdateState);
-  };
-
   return (
     <group
-      {...props}
       dispose={null}
-      onPointerOver={PointerOver}
-      onClick={fixStates}
+      scale={8}
     >
       <mesh
         name="Lace Pin"
@@ -204,3 +184,4 @@ export const NikeTC7900: React.FC<SneakerNodeProps> = ({
 };
 
 useGLTF.preload("/scene.gltf");
+export default withSneaker3Dcustomization(NikeTC7900);
