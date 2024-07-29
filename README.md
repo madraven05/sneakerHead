@@ -11,7 +11,7 @@ An e-commerce sneaker store made using React, Tailwind CSS and Three.js. Three.j
 - **Responsive Design** - The website is fully responsive, ensuring a seamless experience on both desktop and mobile devices.
 ## Demo
 ### 1. Profiles and Movement
-[![Watch the video](https://github.com/madraven05/sneakerHead/blob/feature-update-readme-file/public/3d-moving.mp4)](https://github.com/madraven05/sneakerHead/blob/feature-update-readme-file/public/3d-moving.mp4)
+<video src="assets/profiles.mp4" height=300></video>
 
 ## Installation
 ```bash
