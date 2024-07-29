@@ -12,7 +12,9 @@ An e-commerce sneaker store made using React, Tailwind CSS and Three.js. Three.j
 ## Demo
 ### 1. Profiles and Movement
 
-![](/assets/3d-moving.mp4)
+<video width="320" height="240" controls>
+  <source src="/public/3d-moving.mp4" type="video/mp4">
+</video>
 
 ## Installation
 ```bash
