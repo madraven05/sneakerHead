@@ -1,27 +1,33 @@
 import { Canvas } from "@react-three/fiber";
-import React, { Suspense } from "react";
-import Model from "./Model";
-import { OrbitControls, Plane } from "@react-three/drei";
-import Lights from "./Lights";
-import { SneakerBase } from "./SneakerBase";
-import { NikeAirJordanBWHT } from "./shoes/NikeAirJordanBWHT";
-import { NikeAirJordan } from "./shoes/NikeAirJordan";
-import { ShoeBox } from "./ShoeBox";
-import { MeshStandardMaterial } from "three";
+import React, { ReactNode, Suspense, useEffect, useState } from "react";
 
-const Hero: React.FC = ({}) => {
+interface HeroProps {
+  text: ReactNode;
+  model: ReactNode;
+  tailwindBg?: string,
+}
+
+const Hero: React.FC<HeroProps> = ({ text, model, tailwindBg = "bg-gray-500" }) => {
+  const [textLoaded, setTextLoaded] = useState(false);
+
+  useEffect(() => {
+    setTextLoaded(true);
+  });
+
   return (
-    <div className="space-y-4 mt-8 p-14 rounded-lg bg-red-300 grid grid-cols-2 items-center">
-      <div>
-        <h1 className="text-6xl col-span-2">Hey, there sneakerhead!</h1>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt ad,
-          aliquid magni rerum assumenda quos dolorem eligendi alias, porro
-          quidem unde exercitationem cupiditate molestiae provident, beatae
-          temporibus quod qui? Consequuntur?
-        </p>
+    <div
+      className={`space-y-4 ${
+        textLoaded ? "translate-x-0" : "-translate-x-44"
+      } transition duration-1000 ease-in-out mt-8 p-14 rounded-lg ${tailwindBg} grid grid-cols-2 items-center`}
+    >
+      <div
+        className={`${
+          textLoaded ? "opacity-100" : "opacity-0"
+        } transition ease-in-out duration-1000`}
+      >
+        {text}
       </div>
-      <div className="col-span-1 ease-in" style={{height: "60vh"}}>
+      <div className="col-span-1" style={{ height: "60vh" }}>
         <Canvas
           shadows
           camera={{ position: [0, 0, 5], fov: 10, far: 25, near: 1 }}
@@ -38,20 +44,11 @@ const Hero: React.FC = ({}) => {
               castShadow
             />
           </>
-          <Suspense fallback={null}>
-            <ShoeBox
-              castShadow
-              scale={2}
-              position={[0, -0.24, 0]}
-              rotation={[0.1, 2, -0.1]}
-            />
-            {/* <Plane receiveShadow rotation={[0, 0, 0]} position={[0, -0.3, 0]} /> */}
-          </Suspense>
+          <Suspense fallback={null}>{model}</Suspense>
           {/* <OrbitControls /> */}
         </Canvas>
       </div>
     </div>
-    
   );
 };
 
