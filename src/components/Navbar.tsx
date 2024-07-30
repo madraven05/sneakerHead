@@ -17,14 +17,11 @@ const Navbar: React.FC<navBarProps> = ({navItems}) => {
       aria-label="Global"
       className="flex items-center justify-between p-6 lg:px-8"
     >
-      <div className="flex lg:flex-1">
+      <div className="flex lg:flex-1 items-center">
         <a href="#" className="-m-1.5 p-1.5">
           <span className="sr-only">Your Company</span>
-          <img
-            alt=""
-            src="site-icon.png"
-            className="h-11 w-auto"
-          />
+          <h1 className="text-3xl">Sneaker</h1>
+          <h1 className="text-3xl">Head</h1>
         </a>
       </div>
       <div className="flex lg:hidden">

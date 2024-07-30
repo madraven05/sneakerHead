@@ -5,17 +5,12 @@ Command: npx gltfjsx@6.4.1 scene.gltf -t -o NikeTC7900.tsx
 
 import * as THREE from "three";
 import React, {
-  useContext,
-  useState,
 } from "react";
 import { useGLTF } from "@react-three/drei";
 import { GLTF } from "three-stdlib";
-import { CanvasContext } from "../3DCanvasProvider";
-import {
-  ThreeEvent,
-} from "@react-three/fiber";
+
 import { SneakerColorStates } from "../ShoeState";
-import withSneaker3Dcustomization, { ViewProfile } from "../hocs/SneakerCustomization";
+import withSneaker3Dcustomization, { ViewProfile } from "../hocs/withSneaker3Dcustomization";
 
 type GLTFResult = GLTF & {
   nodes: {

@@ -20,7 +20,7 @@ import { initialSneakerStates, SneakerStates } from "./ShoeState";
 import NikeTC7900 from "./shoes/NikeTC7900";
 import Dropdown, { DropdownItem } from "./Dropdown";
 import { EyeIcon } from "@heroicons/react/24/solid";
-import { MeshGroupRef, ViewProfile } from "./hocs/SneakerCustomization";
+import { MeshGroupRef, ViewProfile } from "./hocs/withSneaker3Dcustomization";
 
 interface customisationDialogueProps {
   open: boolean;

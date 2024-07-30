@@ -1,26 +1,53 @@
 import { Canvas } from "@react-three/fiber";
-import React, { Suspense } from "react";
-import Model from "./Model";
-import { OrbitControls } from "@react-three/drei";
-import Lights from "./Lights";
+import React, { ReactNode, Suspense, useEffect, useState } from "react";
 
-const Hero: React.FC = ({}) => {
+interface HeroProps {
+  text: ReactNode;
+  model: ReactNode;
+  tailwindBg?: string,
+}
+
+const Hero: React.FC<HeroProps> = ({ text, model, tailwindBg = "bg-gray-500" }) => {
+  const [textLoaded, setTextLoaded] = useState(false);
+
+  useEffect(() => {
+    setTextLoaded(true);
+  });
+
   return (
-    <div className="space-y-4 mt-8">
-      <h1 className="text-6xl font-bold">Hey, there sneakerhead!</h1>
-      <Canvas shadows camera={{ position: [4, 4, 2], fov: 20 }}>
-        <Lights />
-        <Suspense fallback={null}>
-          <Model path="nike-air-jordan/scene.gltf" scale={[5, 5, 5]} />
-        </Suspense>
-        <OrbitControls />
-      </Canvas>
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt ad,
-        aliquid magni rerum assumenda quos dolorem eligendi alias, porro quidem
-        unde exercitationem cupiditate molestiae provident, beatae temporibus
-        quod qui? Consequuntur?
-      </p>
+    <div
+      className={`space-y-4 ${
+        textLoaded ? "translate-x-0" : "-translate-x-44"
+      } transition duration-1000 ease-in-out mt-8 p-14 rounded-lg ${tailwindBg} grid grid-cols-2 items-center`}
+    >
+      <div
+        className={`${
+          textLoaded ? "opacity-100" : "opacity-0"
+        } transition ease-in-out duration-1000`}
+      >
+        {text}
+      </div>
+      <div className="col-span-1" style={{ height: "60vh" }}>
+        <Canvas
+          shadows
+          camera={{ position: [0, 0, 5], fov: 10, far: 25, near: 1 }}
+        >
+          <>
+            <ambientLight intensity={0.41} />
+            <spotLight
+              intensity={100}
+              position={[3, 3, 3]}
+              angle={0.35}
+              distance={20}
+              penumbra={0.1}
+              // shadow={}
+              castShadow
+            />
+          </>
+          <Suspense fallback={null}>{model}</Suspense>
+          {/* <OrbitControls /> */}
+        </Canvas>
+      </div>
     </div>
   );
 };

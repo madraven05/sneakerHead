@@ -6,7 +6,7 @@ import {
   MenuItemsProps,
 } from "@headlessui/react";
 import React, { ReactNode } from "react";
-import { ViewProfile } from "./hocs/SneakerCustomization";
+import { ViewProfile } from "./hocs/withSneaker3Dcustomization";
 
 export type DropdownItem = {
   title: string;
