@@ -1,16 +1,13 @@
-import { easings, to, useChain, useSpring, useSpringRef } from "@react-spring/three";
+import { easings, useSpring } from "@react-spring/three";
 import { animated } from "@react-spring/three";
 import { GroupProps } from "@react-three/fiber";
 import { useRef } from "react";
-import { CubicBezier, Group } from "three";
+import { Group } from "three";
 
 export interface withBounceAndRollAnimationProps extends GroupProps {
   bounceFromPos?: [x: number, y: number, z: number];
   bounceHeight?: number;
   bounceDuration?: number;
-  rotationSpeed?: number;
-  rollDistance?: number;
-  rollDuration?: number;
 }
 
 const withBounceAnimation = <P extends object>(

@@ -10,7 +10,7 @@ Title: Basketball
 import * as THREE from 'three'
 import { useGLTF } from '@react-three/drei'
 import { GLTF } from 'three-stdlib'
-import withBounceAndRollAnimation from './hocs/withBounceAndRollAnimation'
+import withBounceAndRollAnimation from './hocs/withBounceAnimation'
 
 type GLTFResult = GLTF & {
   nodes: {

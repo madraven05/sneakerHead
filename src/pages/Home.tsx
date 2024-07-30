@@ -1,7 +1,7 @@
 import React from "react";
 import Navbar from "../components/Navbar";
 import Hero from "../components/Hero";
-import withBounceAnimation from "../components/hocs/withBounceAndRollAnimation";
+import withBounceAnimation from "../components/hocs/withBounceAnimation";
 import { ShoeBox } from "../components/ShoeBox";
 
 const Home: React.FC = () => {
