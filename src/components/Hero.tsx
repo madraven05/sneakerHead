@@ -1,7 +1,5 @@
-import { Fieldset, Legend } from "@headlessui/react";
 import { Canvas } from "@react-three/fiber";
-import React, { ReactNode, Suspense } from "react";
-import { div } from "three/examples/jsm/nodes/Nodes.js";
+import React, { Suspense } from "react";
 import Model from "./Model";
 import { OrbitControls, Plane } from "@react-three/drei";
 import Lights from "./Lights";
