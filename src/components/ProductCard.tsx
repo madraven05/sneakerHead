@@ -29,15 +29,15 @@ const ProductCard: React.FC<productCardProps> = ({
         </div>
         <div className="mt-4 flex-col justify-between">
           <div>
-            <h3 className="text-sm text-gray-700">
+            <h3 className="text-sm">
               <a href="">
                 <span aria-hidden="true" className="absolute inset-0" />
                 {name}
               </a>
             </h3>
-            <p className="mt-1 text-sm text-gray-500">{color}</p>
+            <p className="mt-1 text-sm">{color}</p>
           </div>
-          <p className="text-sm mt-1 font-medium text-gray-900">₹{price.toLocaleString()}</p>
+          <p className="text-sm mt-1 font-medium">₹{price.toLocaleString()}</p>
         </div>
       </div>
     </div>
