@@ -1,13 +1,19 @@
+import { useScroll } from "@react-spring/three";
 import { Canvas } from "@react-three/fiber";
 import React, { ReactNode, Suspense, useEffect, useState } from "react";
+import RotateWithScroll from "./RotateWithScroll";
 
 interface HeroProps {
   text: ReactNode;
   model: ReactNode;
-  tailwindBg?: string,
+  tailwindBg?: string;
 }
 
-const Hero: React.FC<HeroProps> = ({ text, model, tailwindBg = "bg-gray-500" }) => {
+const Hero: React.FC<HeroProps> = ({
+  text,
+  model,
+  tailwindBg = "bg-gray-500",
+}) => {
   const [textLoaded, setTextLoaded] = useState(false);
 
   useEffect(() => {
@@ -30,7 +36,7 @@ const Hero: React.FC<HeroProps> = ({ text, model, tailwindBg = "bg-gray-500" }) 
       <div className="col-span-1" style={{ height: "60vh" }}>
         <Canvas
           shadows
-          camera={{ position: [0, 0, 5], fov: 10, far: 25, near: 1 }}
+          camera={{ position: [3, 0, 5], fov: 10, far: 25, near: 1 }}
         >
           <>
             <ambientLight intensity={0.41} />
