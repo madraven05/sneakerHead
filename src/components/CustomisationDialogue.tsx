@@ -160,6 +160,8 @@ const CustomisationDialogue: React.FC<customisationDialogueProps> = ({
                   <ArrowsPointingOutIcon className="h-5 w-5 text-white" />
                   <p className="text-white text-sm">Scroll</p>
                 </div>
+
+                {/* Color picker */}
                 {hoveredMeshName ? (
                   <div className="flex gap-2">
                     <ViewColumnsIcon className="h-5 w-5 text-white" />
@@ -174,8 +176,10 @@ const CustomisationDialogue: React.FC<customisationDialogueProps> = ({
 
                     {showColorPicker ? (
                       <HexColorPicker
-                        style={{ height: "15vh" }}
+                      // className="h-72 absolute"
+                        style={{ height: "15vh", position:"fixed", left: "40vw", zIndex:10 }}
                         color={hoveredMeshColor!}
+                        
                         onChange={(color) =>
                           updateMeshColor(color, model, hoveredMeshString!)
                         }

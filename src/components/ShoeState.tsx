@@ -25,4 +25,8 @@ export const initialSneakerStates: SneakerStates = {
     framsida_övre: "#ffffff",
     sula_insida: "#ffffff",
   },
+  adidasOzelia: {
+    laces: "#fff",
+    adidas_logo: "#111",
+  }
 };

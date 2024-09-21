@@ -27,12 +27,12 @@ const Basketball: React.FC<JSX.IntrinsicElements['group']> = (props) => {
   return (
     <group {...props} dispose={null}>
       <group rotation={[-Math.PI / 2, 0, 0]}>
-        <mesh geometry={nodes.defaultMaterial.geometry} material={materials.None} rotation={[Math.PI / 2, 0, 0]} />
+        <mesh castShadow geometry={nodes.defaultMaterial.geometry} material={materials.None} rotation={[Math.PI / 2, 0, 0]} />
       </group>
     </group>
   )
 }
 
-export default withBounceAndRollAnimation(Basketball);
+export default Basketball;
 
 useGLTF.preload('/scene.gltf')
