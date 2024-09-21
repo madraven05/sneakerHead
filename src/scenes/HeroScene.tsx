@@ -15,14 +15,19 @@ import { Group } from "three";
 import { NikeAirJordan } from "../components/shoes/NikeAirJordan";
 import { NikeAirJordanBWHT } from "../components/shoes/NikeAirJordanBWHT";
 import { NikeCharge } from "../components/shoes/NikeCharge";
+import { useThree } from "@react-three/fiber";
+import gsap from "gsap";
 
 const HeroScene = () => {
   const RollingBasketball = withRollingAnimation(Basketball);
   const [showHeading, setShowHeading] = useState(false);
   const [openBox, setOpenBox] = useState(false);
 
+  const { scene, camera } = useThree();
+
   const ref = useRef<RapierRigidBody>(null);
 
+  const shoeBoxesRef = useRef<Group>(null);
   const airJordanRef = useRef<Group>(null);
   const airJordanHTRef = useRef<Group>(null);
   const nikeHawaiiRef = useRef<Group>(null);
@@ -59,6 +64,30 @@ const HeroScene = () => {
     }
   }, [openBox]);
 
+  const handleViewSneakers = () => {
+    scene.remove(shoeBoxesRef.current!);
+
+    const cameraTimeline = gsap.timeline({
+      repeat: 0,
+      ease: "power2.In",
+    });
+
+    cameraTimeline.to(camera.position, {
+      x: 0.4,
+      z: -2.6,
+      duration: 1,
+    });
+
+    cameraTimeline.to(
+      camera.rotation,
+      {
+        y: Math.PI,
+        duration: 2,
+      },
+      "-=1"
+    );
+  };
+
   return (
     <>
       <Physics>
@@ -77,66 +106,68 @@ const HeroScene = () => {
         </group>
 
         {/* Shoeboxes */}
-        <group>
-          <RigidBody onCollisionEnter={handleCollisionEnter} restitution={0}>
-            <NikeBox
-              shoeRef={airJordanRef}
-              triggerAnimation={openBox}
-              name="shoebox"
-              scale={1.1}
-              position={[0, 0.2, 1]}
-            />
-          </RigidBody>
-          <group
-            ref={airJordanRef}
-            scale={0.05}
-            rotation={[0, Math.PI / 2, 0]}
-            position={[0, -0.9, 1]}
-            visible={false}
-          >
-            <NikeAirJordan />
+        <group ref={shoeBoxesRef}>
+          <group>
+            <RigidBody onCollisionEnter={handleCollisionEnter} restitution={0}>
+              <NikeBox
+                shoeRef={airJordanRef}
+                triggerAnimation={openBox}
+                name="shoebox"
+                scale={1.1}
+                position={[0, 0.2, 1]}
+              />
+            </RigidBody>
+            <group
+              ref={airJordanRef}
+              scale={0.05}
+              rotation={[0, Math.PI / 2, 0]}
+              position={[0, -0.9, 1]}
+              visible={false}
+            >
+              <NikeAirJordan />
+            </group>
           </group>
-        </group>
 
-        <group>
-          <RigidBody restitution={0}>
-            <NikeBox
-              shoeRef={airJordanHTRef}
-              triggerAnimation={openBox}
-              name="shoebox"
-              scale={1.1}
-              position={[0.7, 0.2, 1]}
-            />
-          </RigidBody>
-          <group
-            ref={airJordanHTRef}
-            rotation={[0, Math.PI / 2, 0]}
-            scale={0.05}
-            position={[0.7, -0.9, 1]}
-            visible={false}
-          >
-            <NikeAirJordanBWHT />
+          <group>
+            <RigidBody restitution={0}>
+              <NikeBox
+                shoeRef={airJordanHTRef}
+                triggerAnimation={openBox}
+                name="shoebox"
+                scale={1.1}
+                position={[0.7, 0.2, 1]}
+              />
+            </RigidBody>
+            <group
+              ref={airJordanHTRef}
+              rotation={[0, Math.PI / 2, 0]}
+              scale={0.05}
+              position={[0.7, -0.9, 1]}
+              visible={false}
+            >
+              <NikeAirJordanBWHT />
+            </group>
           </group>
-        </group>
 
-        <group>
-          <RigidBody restitution={0}>
-            <NikeBox
-              shoeRef={nikeHawaiiRef}
-              triggerAnimation={openBox}
-              name="shoebox"
-              scale={1.1}
-              position={[1.6, 0.2, 1]}
-            />
-          </RigidBody>
-          <group
-            ref={nikeHawaiiRef}
-            rotation={[0, 0, 0]}
-            scale={0.05}
-            position={[1.4, -0.9, 1]}
-            visible={false}
-          >
-            <NikeCharge />
+          <group>
+            <RigidBody restitution={0}>
+              <NikeBox
+                shoeRef={nikeHawaiiRef}
+                triggerAnimation={openBox}
+                name="shoebox"
+                scale={1.1}
+                position={[1.6, 0.2, 1]}
+              />
+            </RigidBody>
+            <group
+              ref={nikeHawaiiRef}
+              rotation={[0, 0, 0]}
+              scale={0.05}
+              position={[1.4, -0.9, 1]}
+              visible={false}
+            >
+              <NikeCharge />
+            </group>
           </group>
         </group>
 
@@ -158,10 +189,20 @@ const HeroScene = () => {
             Your go to sneaker store is here! Check out our collection and
             customize your sneakers to match your groove!
           </p>
-          <button className="p-2 border-2 border-white/50">
+          <button
+            onClick={handleViewSneakers}
+            className="p-2 border-2 border-white/50"
+          >
             View Sneakers
           </button>
         </div>
+      </Html>
+
+      {/* Products UI */}
+      <Html position={[5, 2.2, 5]}>
+        <p className="flex flex-col p-5 h-52 justify-center items-center bg-white/5" style={{width: "90vh"}}>
+          This is where the sneakers will be shown!
+        </p>
       </Html>
     </>
   );
