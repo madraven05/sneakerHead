@@ -18,8 +18,6 @@ function App() {
   return (
     <>
       <Router>
-        <Navbar navItems={navItems} />
-        <div className="border-t border-gray-400 my-2"></div>
         <Routes>
           <Route path="/" element={<Home/>}/>
           <Route path="/products" element={<Products/>}/>

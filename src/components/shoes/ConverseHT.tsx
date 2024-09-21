@@ -25,7 +25,7 @@ type GLTFResult = GLTF & {
 export function ConverseHT(props: JSX.IntrinsicElements['group']) {
   const { nodes, materials } = useGLTF('/converse-ht/scene.gltf') as GLTFResult
   return (
-    <group {...props} dispose={null} scale={20}>
+    <group {...props} dispose={null} scale={4}>
       <mesh geometry={nodes.shoes_3_cons_mat_0.geometry} material={materials.cons_mat} scale={0.01} />
     </group>
   )

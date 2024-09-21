@@ -31,18 +31,9 @@ export function AdidasOzelia(props: JSX.IntrinsicElements["group"]) {
     "/adidas-ozelia/scene.gltf"
   ) as GLTFResult;
 
-  const [materialState, setMaterialState] = useState({
-    materials: {
-      baked_0: "#110000",
-      baked_01: "#aaf000",
-      baked_02: "#7319d2",
-      baked_03: "#fff000",
-      baked_04: "#aaf000",
-    },
-  });
 
   return (
-    <group {...props} dispose={null}>
+    <group scale={0.3} {...props} dispose={null}>
       <group scale={0.01}>
         <group
           position={[-0.903, -12.305, -1.715]}
@@ -50,27 +41,22 @@ export function AdidasOzelia(props: JSX.IntrinsicElements["group"]) {
           scale={50}
         >
           <mesh
-            material-color={materialState.materials.baked_0}
             geometry={nodes.Baked_Baked_0.geometry}
             material={materials.Baked}
           />
           <mesh
-            material-color={materialState.materials.baked_01}
             geometry={nodes.Baked_Baked_0_1.geometry}
             material={materials.Baked}
           />
           <mesh
-            material-color={materialState.materials.baked_02}
             geometry={nodes.Baked_Baked_0_2.geometry}
             material={materials.Baked}
           />
           <mesh
-            material-color={materialState.materials.baked_03}
             geometry={nodes.Baked_Baked_0_3.geometry}
             material={materials.Baked}
           />
           <mesh
-            material-color={materialState.materials.baked_04}
             geometry={nodes.Baked_Baked_0_4.geometry}
             material={materials.Baked}
           />

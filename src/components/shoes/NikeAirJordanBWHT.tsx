@@ -27,7 +27,7 @@ type GLTFResult = GLTF & {
 export function NikeAirJordanBWHT(props: JSX.IntrinsicElements['group']) {
   const { nodes, materials } = useGLTF('/nike-air-jordan-bw/scene.gltf') as GLTFResult
   return (
-    <group {...props} dispose={null}>
+    <group scale={0.02} {...props} dispose={null}>
       <mesh geometry={nodes.shoe_shoe_0.geometry} material={materials.shoe} rotation={[-Math.PI / 2, 0, 0]} scale={50} />
       <mesh geometry={nodes.shoelace_shoelace_0.geometry} material={materials.shoelace} rotation={[-Math.PI / 2, 0, 0]} scale={50} />
     </group>
